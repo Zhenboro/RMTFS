@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("Cliente")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Cliente")>
-<Assembly: AssemblyCopyright("Copyright ©  2022")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTitle("FileSystem Client")>
+<Assembly: AssemblyDescription("Cliente de gestor de ficheros")>
+<Assembly: AssemblyCompany("Zhenboro")>
+<Assembly: AssemblyProduct("RMTFS Client")>
+<Assembly: AssemblyCopyright("")>
+<Assembly: AssemblyTrademark("Zhenboro")>
 
 <Assembly: ComVisible(False)>
 
