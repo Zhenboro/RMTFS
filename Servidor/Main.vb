@@ -3,6 +3,7 @@ Imports System.Threading
 Imports System.Net
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.IO
+Imports Microsoft.Win32
 Public Class Main
     Dim YO As TcpListener
     Dim REMOTO As TcpClient
@@ -11,11 +12,42 @@ Public Class Main
     Dim ENVIA As Thread
     Public ENVIO As Byte()
     Dim DirArray As New ArrayList
+    Dim ServerIP As String = "localhost"
+    Dim ServerPort As Integer = 15243
 
     Dim rmtUsername As String
-
+    Sub LoadMemory()
+        Try
+            Dim llaveReg As String = "SOFTWARE\\Zhenboro\\RMTFS"
+            Dim registerKey As RegistryKey = Registry.CurrentUser.OpenSubKey(llaveReg, True)
+            If registerKey Is Nothing Then
+                SaveMemory()
+            Else
+                ServerIP = registerKey.GetValue("ServerIP")
+                ServerPort = registerKey.GetValue("ServerPort")
+                TextBox1.Text = ServerIP & ":" & ServerPort
+            End If
+        Catch ex As Exception
+            Console.WriteLine("LoadMemory Error: " & ex.Message)
+        End Try
+    End Sub
+    Sub SaveMemory()
+        Try
+            Dim llaveReg As String = "SOFTWARE\\Zhenboro\\RMTFS"
+            Dim registerKey As RegistryKey = Registry.CurrentUser.OpenSubKey(llaveReg, True)
+            If registerKey Is Nothing Then
+                Registry.CurrentUser.CreateSubKey(llaveReg, True)
+                registerKey = Registry.CurrentUser.OpenSubKey(llaveReg, True)
+            End If
+            registerKey.SetValue("ServerIP", ServerIP)
+            registerKey.SetValue("ServerPort", ServerPort)
+        Catch ex As Exception
+            Console.WriteLine("SaveMemory Error: " & ex.Message)
+        End Try
+    End Sub
     Private Sub Server_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CheckForIllegalCrossThreadCalls = False
+        LoadMemory()
     End Sub
     Private Sub Server_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Try
